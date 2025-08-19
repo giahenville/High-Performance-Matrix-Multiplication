@@ -35,7 +35,22 @@ long long timeToExecute(std::vector<std::vector<int> > matrix1, std::vector<std:
 
 };
 
-void printMatrix(const std::vector<std::vector<int> >& matrix) {
+// Function to multiply two square matrices
+Matrix matrixMultiplication(const Matrix& A, const Matrix& B) {
+    size_t n = A.size();
+    Matrix C(n, std::vector<int>(n, 0));
+
+    for (size_t row = 0; row < n; row++) {
+        for (size_t col = 0; col < n; col++) {
+            for (size_t element = 0; element < n; element++) {
+                C[row][col] += A[row][element] * B[element][col];
+            }
+        }
+    }
+    return C;
+}
+
+void printMatrix(const Matrix& matrix) {
     for (const auto& row : matrix) {
         for (int val : row) {
             std::cout << val << " ";
