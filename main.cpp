@@ -2,14 +2,40 @@
 #include <vector>
 #include <chrono>
 
-std::vector<std::vector<int> > generateMatrix(int size){
+using Matrix = std::vector<std::vector<int>>;
 
-    std::vector<std::vector<int> > matrix;
+Matrix generateMatrix(int size);
+long long timeToExecute(Matrix& A, Matrix& B);
+Matrix matrixMultiplication(const Matrix& A, const Matrix& B);
+void printMatrix(const Matrix& matrix);
+
+int main(){
+    srand(time(0)); // seed random once
+    int size = (rand() % 5) + 2; // random size between 2 and 6
+    
+    Matrix matrix1 = generateMatrix(size);
+    Matrix matrix2 = generateMatrix(size);
+
+    std::cout << "Matrix1:\n";
+    printMatrix(matrix1);
+    std::cout << "Matrix2:\n";
+    printMatrix(matrix2);
+
+    long long result = timeToExecute(matrix1, matrix2);
+
+    std::cout << "Time taken to execute: " << result << " microseconds \n";
+    // std::cout << "type of result: " << typeid(result).name() << "\n";
+    return 0;
+}
+
+Matrix generateMatrix(int size){
+
+    Matrix matrix;
 
     for (int i = 0; i < size; i++ ) {
         std::vector<int> arr;
         for ( int j = 0; j < size; j++ ) {
-            int num = rand() % (size + 1);
+            int num = rand() % 10;
             arr.push_back(num);
         }
         matrix.push_back(arr);
@@ -19,18 +45,17 @@ std::vector<std::vector<int> > generateMatrix(int size){
 };
 
 
-long long timeToExecute(std::vector<std::vector<int> > matrix1, std::vector<std::vector<int> > matrix2){
+long long timeToExecute(Matrix& A, Matrix& B){
 
     auto start = std::chrono::high_resolution_clock::now();
-    // Test code
-    for ( int i = 0; i < 1000000; i++) {
-        int x = i;
-    }
-
+    // TODO: run matrix multiplication algorithm here
+    
+    Matrix res = matrixMultiplication(A, B);
+    
     auto stop = std::chrono::high_resolution_clock::now();
-
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-
+    std::cout << "Result:\n";
+    printMatrix(res);
     return duration.count();
 
 };
@@ -58,21 +83,3 @@ void printMatrix(const Matrix& matrix) {
         std::cout << "\n";
     }
 };
-
-int main(){
-    int size = rand() % 10;
-    
-    std::vector<std::vector<int> > matrix1 = generateMatrix(size);
-    std::vector<std::vector<int> > matrix2 = generateMatrix(size);
-
-    std::cout << "Matrix1:\n";
-    printMatrix(matrix1);
-    std::cout << "Matrix2:\n";
-    printMatrix(matrix2);
-
-    long long result = timeToExecute(matrix1, matrix2);
-
-    std::cout << "Time taken to execute: " << result << " microseconds \n";
-    // std::cout << "type of result: " << typeid(result).name() << "\n";
-    return 0;
-}
