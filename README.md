@@ -19,6 +19,7 @@ By comparing performance across languages and hardware backends, we can highligh
 ---
 
 ## Project Structure
+'''text
 ├── README.md                       # What you're reading right now!
 ├── requirements.txt                # Python dependencies
 ├── data
@@ -35,6 +36,7 @@ By comparing performance across languages and hardware backends, we can highligh
     ├── generate_matrices.py        # Generates N by N matrices for benchmarking
     ├── plot_benchmark.py           # Creates performance plots for CSV results
     └── run_benchmark.py            # Automates benchmarking and outputs a CSV
+'''
 
 ---
 
