@@ -12,7 +12,8 @@ import statistics
 import os
 
 # matrix sizes to test
-SIZES = [1, 2, 4, 8, 16, 32, 64, 128]
+# SIZES = [1, 2, 4, 8, 16, 32, 64, 128]
+SIZES = [1,2,3]
 
 # number of repetitions per size
 REPEATS = 5
@@ -20,12 +21,15 @@ REPEATS = 5
 # regex to capture runtime (microseconds or µs)
 time_pattern = re.compile(r"time to execute:\s*([\d.]+)")
 
+# compile C++ program
+subprocess.run(["make"], cwd="../src", check=True)
+
 results = []
 
 for N in SIZES:
     print(f"\nRunning size {N}x{N}")
     # setup input matrices
-    subprocess.run(["python3", "setup.py", str(N)], check=True)
+    subprocess.run(["python3", "generate_matrices.py", str(N)], check=True)
 
     cpp_times = []
     py_naive_times = []
@@ -33,13 +37,13 @@ for N in SIZES:
 
     for i in range(REPEATS):
         # run C++ naive
-        cpp_out = subprocess.run(["./main"], capture_output=True, text=True, check=True)
+        cpp_out = subprocess.run(["./main"], cwd="../src", capture_output=True, text=True, check=True)
         cpp_match = time_pattern.search(cpp_out.stdout)
         if cpp_match:
             cpp_times.append(float(cpp_match.group(1)))
 
         # run Python naive + GPU
-        py_out = subprocess.run(["python3", "main.py"], capture_output=True, text=True, check=True)
+        py_out = subprocess.run(["python3", "main.py"], cwd="../src", capture_output=True, text=True, check=True)
 
         # naive (first line match)
         py_matches = time_pattern.findall(py_out.stdout)
@@ -60,7 +64,7 @@ for N in SIZES:
     })
 
 # ensure directory exists; otherwise create it
-filepath = "data/benchmark_results.csv"
+filepath = "../data/benchmark_results.csv"
 os.makedirs(os.path.dirname(filepath), exist_ok=True)
 
 # save to CSV

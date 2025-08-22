@@ -6,27 +6,12 @@
 
 using Matrix = std::vector<std::vector<int>>;
 
-Matrix generateMatrix(size_t N);
 void timeToExecute(Matrix& A, Matrix& B, std::function<Matrix(const Matrix&, const Matrix&)>);
 Matrix naiveMMUL(const Matrix& A, const Matrix& B);
 void printMatrix(const Matrix& matrix);
 Matrix FileToMatrix(std::string_view filepath);
 
-int main(){
-    /*
-    srand(time(0)); // seed random once
-    //int size = (rand() % 5) + 2; // random size between 2 and 6
-    int size = 10;
-    
-    Matrix matrix1 = generateMatrix(size);
-    Matrix matrix2 = generateMatrix(size);
-    
-    std::cout << "Matrix1:\n";
-    printMatrix(matrix1);
-    std::cout << "Matrix2:\n";
-    printMatrix(matrix2);
-    */
-
+int main() {
     // read from external files
     Matrix MatA = FileToMatrix("MatA.txt");
     Matrix MatB = FileToMatrix("MatB.txt");
@@ -35,19 +20,6 @@ int main(){
     timeToExecute(MatA, MatB, naiveMMUL);
     return 0;
 }
-
-// Generates an N by N (square) matrix
-Matrix generateMatrix(size_t N) {
-    Matrix matrix(N, std::vector<int>(N, 0));
-    for (size_t i = 0; i < N; i++) {
-        for (size_t j = 0; j < N; j++) {
-            int num = rand() % 10;
-            matrix[i][j] = num;
-        }
-    }
-    return matrix;
-};
-
 
 void timeToExecute(Matrix& A, Matrix& B, std::function<Matrix(const Matrix&, const Matrix&)> mmul) {
     auto start = std::chrono::high_resolution_clock::now();

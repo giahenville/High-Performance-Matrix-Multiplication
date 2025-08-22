@@ -31,8 +31,8 @@ def FileToTensor(filename):
 def main():
     # read in MatA.txt and MatB.txt and store them as a PyTorch tensor
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-    MatA = FileToTensor("MatA.txt")
-    MatB = FileToTensor("MatB.txt")
+    MatA = FileToTensor("../data/MatA.txt")
+    MatB = FileToTensor("../data/MatB.txt")
     MatA = MatA.to(device)
     MatB = MatB.to(device)
 
