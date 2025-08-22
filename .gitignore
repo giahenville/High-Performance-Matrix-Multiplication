@@ -5,5 +5,10 @@
 *.a      
 *.so      
 *.dll     
-main    
+main 
+
+# these should be newly generated every time
+MatA.txt
+MatB.txt
+benchmark_results.csv
 
