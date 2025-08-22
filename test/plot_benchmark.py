@@ -22,7 +22,7 @@ plt.tight_layout()
 
 # save the plot under public/
 plot_path = "../public/mmul_performance_plot.png"
-os.makedirs(os.path.dirname("public/"), exist_ok=True)
+os.makedirs(os.path.dirname("../public"), exist_ok=True)
 plt.savefig(plot_path)
 
 plt.show()
