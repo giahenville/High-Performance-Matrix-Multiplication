@@ -9,6 +9,7 @@ import subprocess
 import re
 import csv
 import statistics
+import os
 
 # matrix sizes to test
 SIZES = [1, 2, 4, 8, 16, 32, 64, 128]
@@ -58,8 +59,12 @@ for N in SIZES:
         "Python_GPU_us": py_gpu_avg
     })
 
+# ensure directory exists; otherwise create it
+filepath = "data/benchmark_results.csv"
+os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
 # save to CSV
-with open("benchmark_results.csv", "w", newline="") as csvfile:
+with open(filepath, "w", newline="") as csvfile:
     fieldnames = ["N", "C++_Naive_us", "Python_Naive_us", "Python_GPU_us"]
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
