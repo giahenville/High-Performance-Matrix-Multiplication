@@ -1,8 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 # Load data
-data = pd.read_csv("benchmark_results.csv")
+data = pd.read_csv("data/benchmark_results.csv")
 
 # Plot
 plt.figure(figsize=(10,6))
@@ -18,5 +19,10 @@ plt.title("Matrix Multiplication Performance Benchmark")
 plt.legend()
 plt.grid(True, which="both", linestyle="--", linewidth=0.5)
 plt.tight_layout()
+
+# save the plot under public/
+plot_path = "public/mmul_performance_plot.png"
+os.makedirs(os.path.dirname("public/"), exist_ok=True)
+plt.savefig(plot_path)
 
 plt.show()
